@@ -22,7 +22,7 @@ export default function Header() {
         className="font-bold text-lg whitespace-nowrap"
         style={{ color: brandColor }}
       >
-        ROZA POWER PLANT
+        ROSA POWER PLANT
       </div>
 
       {/* Mobile & tablet: Hamburger + Socials */}

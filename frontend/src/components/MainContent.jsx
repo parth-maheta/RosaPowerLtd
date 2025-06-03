@@ -5,19 +5,44 @@ import RightPanel from "./RightPanel";
 
 export default function MainContent() {
   return (
-    <section className="w-full min-h-screen bg-gray-50 flex flex-col md:flex-row gap-6 px-4 py-6 md:px-6 md:py-8">
+    <section
+      className="
+        w-full min-h-auto bg-gray-50 flex flex-col md:flex-row gap-2
+        px-2 md:px-3 py-2 md:py-3
+      "
+    >
       {/* Sidebar */}
-      <aside className="w-full md:w-64 flex-shrink-0 bg-white rounded shadow-lg max-h-[60vh] md:max-h-[calc(100vh-64px)] overflow-y-auto">
+      <aside
+        className="
+          w-full md:w-64 flex-shrink-0
+          md:bg-white md:rounded md:shadow-lg
+          max-h-full md:max-h-[calc(100vh-60px)]
+          overflow-y-auto
+          relative
+        "
+      >
         <Sidebar />
       </aside>
 
       {/* Birthday Gallery */}
-      <main className="flex-1 w-full bg-white rounded shadow-lg max-h-[60vh] md:max-h-[calc(100vh-64px)] overflow-hidden">
+      <main
+        className="
+          flex-1 w-full bg-white rounded shadow-lg
+          max-h-full md:max-h-[calc(100vh-60px)]
+          overflow-y-auto
+        "
+      >
         <BirthdayGallery />
       </main>
 
-      {/* Right Panel container */}
-      <aside className="w-full md:w-72 flex-shrink-0 bg-white rounded shadow-lg max-h-[60vh] md:max-h-[calc(100vh-64px)] sticky top-16 self-start overflow-hidden">
+      {/* Right Panel */}
+      <aside
+        className="
+          w-full md:w-72 flex-shrink-0 bg-white rounded shadow-lg
+          max-h-full md:max-h-[calc(100vh-60px)]
+          sticky top-16 self-start overflow-hidden
+        "
+      >
         <RightPanel />
       </aside>
     </section>
