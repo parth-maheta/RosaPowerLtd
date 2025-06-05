@@ -6,7 +6,6 @@ export default function Home() {
   return <MainContent />;
 }
 
-// Named export for StatsCards only
 export function StatsCardsOnly() {
   return <StatsCards />;
 }

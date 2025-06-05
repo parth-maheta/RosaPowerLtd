@@ -49,7 +49,7 @@ export default function StatsCards() {
     (sum, unit) => sum + unit.generationMW,
     0
   );
-  const maxCapacity = 1500;
+  const maxCapacity = 1200;
 
   const currentDate = new Date().toLocaleString("en-US", {
     month: "2-digit",

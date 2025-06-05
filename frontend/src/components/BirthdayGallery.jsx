@@ -1,4 +1,3 @@
-// BirthdayGallery.jsx
 import React, { useEffect, useState } from "react";
 import cakeIcon from "../assets/images/cake.png";
 
@@ -39,7 +38,7 @@ export default function BirthdayGallery() {
 
   return (
     <main
-      className="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between max-h-[calc(100vh-64px)] overflow-y-auto flex-1"
+      className="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between max-h-[calc(100vh-64px)] overflow-y-auto flex-1 relative z-20"
       aria-label="Birthday Gallery Section"
     >
       <h2 className="text-2xl font-bold text-blue-700 text-center mb-6 select-none">
@@ -51,6 +50,7 @@ export default function BirthdayGallery() {
         className="relative h-12 overflow-hidden border rounded bg-gray-50 border-gray-200 mb-8"
         aria-live="polite"
         aria-atomic="true"
+        role="list"
       >
         <div
           className="absolute top-0 left-0 flex items-center animate-marquee whitespace-nowrap text-gray-900 text-base font-semibold"
@@ -61,8 +61,10 @@ export default function BirthdayGallery() {
               key={i}
               className="inline-flex items-center gap-2 mr-12"
               style={{ whiteSpace: "nowrap" }}
+              role="listitem"
             >
-              <strong>{emp.name}</strong> <em>({emp.department})</em>
+              <strong>{emp?.name ?? "Employee"}</strong>{" "}
+              <em>({emp?.department ?? "Dept."})</em>
               <img src={cakeIcon} alt="Birthday cake" className="w-5 h-5" />
             </span>
           ))}
@@ -74,7 +76,7 @@ export default function BirthdayGallery() {
         {galleryImages.length > 0 ? (
           <img
             src={galleryImages[currentIndex]}
-            alt={`Event ${currentIndex + 1}`}
+            alt={`Event ${currentIndex + 1} image`}
             className="w-full h-full object-cover rounded transition-all duration-700 ease-in-out"
             loading="lazy"
           />

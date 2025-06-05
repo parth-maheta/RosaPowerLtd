@@ -10,14 +10,14 @@ import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen flex flex-col bg-gray-100">
       <Header />
 
-      {/* Reduced vertical padding here */}
-      <div className="px-6  w-full max-w-screen-2xl mx-auto">
+      <div className="w-full">
         <div className="space-y-3">
           <StatsCards />
           <MainContent />
+
           <div className="relative rounded-xl overflow-hidden">
             <div
               className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
@@ -29,6 +29,7 @@ function App() {
             </div>
           </div>
         </div>
+
         <Footer />
         <ScrollToTop />
       </div>
