@@ -77,10 +77,10 @@ app.get("/api/graphs", (req, res) => {
 // Birthdays
 app.get("/api/birthdays", (req, res) => {
   const sql = `
-    SELECT * FROM employees 
-    WHERE MONTH(dob) = MONTH(CURDATE()) 
-      AND DAY(dob) = DAY(CURDATE())
-  `;
+      SELECT * FROM employees 
+      WHERE MONTH(dob) = MONTH(CURDATE()) 
+        AND DAY(dob) = DAY(CURDATE())
+    `;
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Error fetching birthdays" });
     res.json(results);
@@ -110,14 +110,116 @@ app.post("/api/events", upload.single("photo"), (req, res) => {
 // Bravo Awards
 app.get("/api/awards", (req, res) => {
   const sql = `
-    SELECT e.name, e.department, b.award_date 
-    FROM bravo_awards b
-    JOIN employees e ON b.employee_id = e.id
-    ORDER BY b.award_date DESC
-  `;
+      SELECT e.name, e.department, b.award_date 
+      FROM bravo_awards b
+      JOIN employees e ON b.employee_id = e.id
+      ORDER BY b.award_date DESC
+    `;
   db.query(sql, (err, results) => {
     if (err) return res.status(500).json({ error: "Error fetching awards" });
     res.json(results);
+  });
+});
+app.get("/api/files", (req, res) => {
+  const { category, department } = req.query;
+
+  if (!category) {
+    return res.status(400).json({ error: "Category is required" });
+  }
+
+  let sql =
+    "SELECT id AS sno, filename, filepath FROM downloadable_files WHERE category = ?";
+  const params = [category];
+
+  if (department) {
+    sql += " AND department = ?";
+    params.push(department);
+  }
+
+  db.query(sql, params, (err, results) => {
+    if (err) {
+      console.error("Error fetching files:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const files = results.map((file) => ({
+      ...file,
+      downloadUrl: `/uploads/${file.filepath}`,
+    }));
+
+    res.json(files);
+  });
+});
+// Telephone Directory API
+app.get("/api/telephone-directory", (req, res) => {
+  const {
+    search = "",
+    page = 1,
+    perPage = 20,
+    generalExt = false,
+    location = "rpl",
+  } = req.query;
+
+  const offset = (parseInt(page) - 1) * parseInt(perPage);
+  const tableName =
+    location.toLowerCase() === "ho" ? "headoffice" : "employees";
+
+  let whereClauses = [];
+  let whereParams = [];
+
+  if (search) {
+    whereClauses.push(`(
+      emp_code LIKE ? OR
+      name LIKE ? OR
+      designation LIKE ? OR
+      department LIKE ? OR
+      mobile_no LIKE ? OR
+      ext_no LIKE ?
+    )`);
+    for (let i = 0; i < 6; i++) {
+      whereParams.push(`%${search}%`);
+    }
+  }
+
+  if (generalExt === "true") {
+    whereClauses.push("ext_no LIKE '1%'");
+  }
+
+  const whereSQL =
+    whereClauses.length > 0 ? "WHERE " + whereClauses.join(" AND ") : "";
+
+  const sqlData = `
+    SELECT emp_code, name, designation, department, mobile_no, ext_no
+    FROM ${tableName}
+    ${whereSQL}
+    ORDER BY name ASC
+    LIMIT ? OFFSET ?
+  `;
+
+  const dataParams = [...whereParams, parseInt(perPage), offset];
+
+  const sqlCount = `
+    SELECT COUNT(*) AS total
+    FROM ${tableName}
+    ${whereSQL}
+  `;
+
+  db.query(sqlCount, whereParams, (err, countResult) => {
+    if (err) {
+      console.error(`Error fetching ${tableName} count:`, err);
+      return res.status(500).json({ error: "Database error" });
+    }
+
+    const total = countResult[0].total;
+
+    db.query(sqlData, dataParams, (err, results) => {
+      if (err) {
+        console.error(`Error fetching ${tableName} data:`, err);
+        return res.status(500).json({ error: "Database error" });
+      }
+
+      res.json({ data: results, total });
+    });
   });
 });
 

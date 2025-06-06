@@ -34,38 +34,39 @@ export default function BirthdayGallery() {
     return () => clearInterval(interval);
   }, [galleryImages]);
 
-  const marqueeContent = [...birthdayEmployees, ...birthdayEmployees];
+  const marqueeContent = [...birthdayEmployees];
 
   return (
     <main
-      className="bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between max-h-[calc(100vh-64px)] overflow-y-auto flex-1 relative z-20"
+      className="bg-white shadow-lg rounded-lg flex flex-col justify-between max-h-[calc(100vh-64px)] overflow-y-auto flex-1 relative z-20"
       aria-label="Birthday Gallery Section"
     >
-      <h2 className="text-2xl font-bold text-blue-700 text-center mb-6 select-none">
-        🎉 Dear Employees RPL family wishes you a very Happy Birthday!
+      <h2 className="text-2xl font-bold text-blue-700 text-center mb-6 select-none px-4">
+        🎉 Dear Employees, RPL family wishes you a very Happy Birthday!
       </h2>
 
       {/* Marquee */}
       <div
-        className="relative h-12 overflow-hidden border rounded bg-gray-50 border-gray-200 mb-8"
+        className="relative h-14 overflow-hidden border rounded bg-gray-50 border-gray-200 mb-8 group"
         aria-live="polite"
         aria-atomic="true"
         role="list"
       >
         <div
-          className="absolute top-0 left-0 flex items-center animate-marquee whitespace-nowrap text-gray-900 text-base font-semibold"
+          className="absolute top-0 left-0 flex whitespace-nowrap text-gray-900 text-base font-semibold gap-12 animate-marquee-full group-hover:[animation-play-state:paused]"
           style={{ minWidth: "200%" }}
         >
-          {marqueeContent.map((emp, i) => (
+          {[...marqueeContent, ...marqueeContent].map((emp, i) => (
             <span
               key={i}
-              className="inline-flex items-center gap-2 mr-12"
-              style={{ whiteSpace: "nowrap" }}
+              className="inline-flex items-center gap-2 px-4"
               role="listitem"
             >
-              <strong>{emp?.name ?? "Employee"}</strong>{" "}
-              <em>({emp?.department ?? "Dept."})</em>
-              <img src={cakeIcon} alt="Birthday cake" className="w-5 h-5" />
+              <strong>{emp?.name ?? "Employee"}</strong>
+              <em className="text-sm text-gray-600">
+                ({emp?.department ?? "Dept."})
+              </em>
+              <img src={cakeIcon} alt="🎂" className="w-5 h-5" />
             </span>
           ))}
         </div>
@@ -77,23 +78,24 @@ export default function BirthdayGallery() {
           <img
             src={galleryImages[currentIndex]}
             alt={`Event ${currentIndex + 1} image`}
-            className="w-full h-full object-cover rounded transition-all duration-700 ease-in-out"
+            className="w-full h-[300px] md:h-[500px] object-cover rounded transition-all duration-700 ease-in-out"
             loading="lazy"
           />
         ) : (
-          <div className="flex justify-center items-center h-full text-gray-400">
+          <div className="flex justify-center items-center h-full text-gray-400 p-6 text-center text-lg">
             No event images found.
           </div>
         )}
       </div>
 
+      {/* CSS Styles */}
       <style>{`
-        @keyframes marquee {
+        @keyframes marqueeFull {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
         }
-        .animate-marquee {
-          animation: marquee 7s linear infinite;
+        .animate-marquee-full {
+          animation: marqueeFull 20s linear infinite;
         }
       `}</style>
     </main>

@@ -4,16 +4,21 @@ import { FaTwitter, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [telDirOpen, setTelDirOpen] = useState(false); // for desktop hover
+
+  const brandColor = "#003366"; // Navy blue
 
   const navItems = [
     { to: "/", label: "Home" },
     { to: "/policies", label: "Policies" },
     { to: "/newsroom", label: "Newsroom" },
-    { to: "/telephone-directory", label: "Telephone Directory" },
   ];
 
-  const brandColor = "#003366"; // Navy blue
-  const hoverColor = "#00509e"; // Lighter blue on hover
+  // Telephone Directory submenu links
+  const telDirSubmenu = [
+    { to: "/telephone-directory/rpl", label: "RPL (Power)" },
+    { to: "/telephone-directory/ho", label: "HO (Rpower)" },
+  ];
 
   return (
     <header className="bg-white shadow flex items-center justify-between px-6 py-3 relative">
@@ -59,7 +64,7 @@ export default function Header() {
       </div>
 
       {/* Desktop: Nav + Search + Socials */}
-      <nav className="hidden md:flex flex-wrap items-center gap-6 mx-6 max-w-full flex-1">
+      <nav className="hidden md:flex flex-wrap items-center gap-6 mx-6 max-w-full flex-1 relative">
         {navItems.map((item) => (
           <NavLink
             key={item.to}
@@ -75,6 +80,39 @@ export default function Header() {
             {item.label}
           </NavLink>
         ))}
+
+        {/* Telephone Directory with hover dropdown */}
+        <div
+          className="relative whitespace-nowrap"
+          onMouseEnter={() => setTelDirOpen(true)}
+          onMouseLeave={() => setTelDirOpen(false)}
+        >
+          <span
+            className="cursor-pointer hover:underline font-medium"
+            style={{ color: brandColor }}
+          >
+            Telephone Directory
+          </span>
+
+          {telDirOpen && (
+            <div className="absolute top-full mt-1 left-0 bg-white border border-gray-300 rounded shadow-md z-50 min-w-[160px]">
+              {telDirSubmenu.map((sub) => (
+                <NavLink
+                  key={sub.to}
+                  to={sub.to}
+                  className={({ isActive }) =>
+                    (isActive ? "bg-blue-100 " : "") +
+                    "block px-4 py-2 text-gray-800 hover:bg-blue-200"
+                  }
+                  onClick={() => setMenuOpen(false)}
+                  style={{ color: brandColor }}
+                >
+                  {sub.label}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Spacer */}
         <div className="flex-1 min-w-[120px]" />
@@ -130,6 +168,34 @@ export default function Header() {
               {item.label}
             </NavLink>
           ))}
+
+          {/* Telephone Directory submenu for mobile */}
+          <details className="group">
+            <summary
+              className="cursor-pointer font-medium"
+              style={{ color: brandColor }}
+            >
+              Telephone Directory
+            </summary>
+            <div className="pl-4 mt-2 flex flex-col space-y-1">
+              {telDirSubmenu.map((sub) => (
+                <NavLink
+                  key={sub.to}
+                  to={sub.to}
+                  className={({ isActive }) =>
+                    isActive
+                      ? "font-semibold underline whitespace-nowrap"
+                      : "hover:underline whitespace-nowrap"
+                  }
+                  onClick={() => setMenuOpen(false)}
+                  style={{ color: brandColor }}
+                >
+                  {sub.label}
+                </NavLink>
+              ))}
+            </div>
+          </details>
+
           {/* Optional search bar on mobile menu */}
           <input
             type="text"

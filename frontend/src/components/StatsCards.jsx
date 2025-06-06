@@ -127,11 +127,11 @@ export default function StatsCards() {
   };
 
   return (
-    <section className="bg-gray-50 p-1 w-full">
+    <section className="bg-gray-50  w-full">
       {" "}
       {/* reduced padding */}
       <div className="w-full mx-auto">
-        <div className="bg-white p-3 rounded-lg shadow-md w-full">
+        <div className="bg-white p-2 rounded-lg shadow-md w-full">
           {" "}
           {/* reduced padding */}
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-3">

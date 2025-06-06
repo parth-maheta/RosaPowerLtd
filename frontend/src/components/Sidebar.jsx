@@ -1,7 +1,16 @@
-import React, { useState, useEffect } from "react";
+// Sidebar.jsx
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { useNavigate } from "react-router-dom";
 
-const Dropdown = ({ title, items, isOpen, onToggle, parentRef }) => {
+const Dropdown = ({
+  title,
+  items,
+  isOpen,
+  onToggle,
+  parentRef,
+  onItemSelect,
+}) => {
   const [submenuPos, setSubmenuPos] = useState({ top: 0, left: 0 });
   const [container] = useState(() => document.createElement("div"));
 
@@ -63,10 +72,10 @@ const Dropdown = ({ title, items, isOpen, onToggle, parentRef }) => {
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
-                      alert(`You selected ${item}`);
+                      onItemSelect(item);
                     }
                   }}
-                  onClick={() => alert(`You selected ${item}`)}
+                  onClick={() => onItemSelect(item)}
                 >
                   {item}
                 </li>
@@ -83,7 +92,9 @@ export default function Sidebar() {
   const [openIndex, setOpenIndex] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const dropdownRefs = React.useRef([]);
+  const dropdownRefs = useRef([]);
+
+  const navigate = useNavigate();
 
   const dropdowns = [
     {
@@ -154,6 +165,7 @@ export default function Sidebar() {
     setOpenIndex(null);
   };
 
+  // Make sure dropdownRefs has correct number of refs
   while (dropdownRefs.current.length < dropdowns.length) {
     dropdownRefs.current.push(React.createRef());
   }
@@ -194,16 +206,42 @@ export default function Sidebar() {
         </h2>
 
         <div className="space-y-1">
-          {dropdowns.map(({ title, items }, idx) => (
-            <Dropdown
-              key={idx}
-              title={title}
-              items={items}
-              isOpen={openIndex === idx}
-              onToggle={() => toggleDropdown(idx)}
-              parentRef={dropdownRefs.current[idx]}
-            />
-          ))}
+          {dropdowns.map(({ title, items }, idx) => {
+            // Handler when dropdown item is clicked
+            const onItemSelect = (item) => {
+              if (title === "Forms and Formats") {
+                navigate(
+                  `/download?category=${encodeURIComponent(
+                    title
+                  )}&department=${encodeURIComponent(item)}`
+                );
+                closeSidebar();
+              } else if (title === "Telephone Directory") {
+                const telMap = {
+                  "RPL(Plant)": "/telephone-directory/rpl",
+                  "HO(RPower)": "/telephone-directory/ho",
+                };
+
+                const path = telMap[item] || "/telephone-directory";
+                navigate(path);
+                closeSidebar();
+              } else {
+                alert(`You selected ${item}`);
+              }
+            };
+
+            return (
+              <Dropdown
+                key={idx}
+                title={title}
+                items={items}
+                isOpen={openIndex === idx}
+                onToggle={() => toggleDropdown(idx)}
+                parentRef={dropdownRefs.current[idx]}
+                onItemSelect={onItemSelect}
+              />
+            );
+          })}
         </div>
 
         <div className="mt-8 pt-6 border-t border-blue-300">

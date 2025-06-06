@@ -9,7 +9,7 @@ export default function MainContent() {
       className="
         relative w-full min-h-auto bg-gray-50
         flex flex-col md:flex-row gap-2
-        px-2 md:px-3 py-2 md:py-3
+          md:py-3
       "
     >
       {/* Sidebar */}
@@ -28,7 +28,7 @@ export default function MainContent() {
       {/* Birthday Gallery */}
       <main
         className="
-          flex-1 w-full bg-white rounded shadow-lg
+          flex-1 w-full rounded shadow-lg
           max-h-full md:max-h-[calc(100vh-60px)]
           overflow-y-auto
           relative z-10
