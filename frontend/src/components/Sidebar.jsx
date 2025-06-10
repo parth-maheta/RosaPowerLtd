@@ -129,7 +129,10 @@ export default function Sidebar() {
       title: "Telephone Directory",
       items: ["RPL(Plant)", "HO(RPower)"],
     },
-    { title: "Gallery", items: ["Option A", "Option B", "Option C"] },
+    {
+      title: "Gallery",
+      items: ["Durga Pooja 2020", "Safety Week 2021", "Annual Day 2022"],
+    },
     { title: "Notice Board", items: ["RPL Holidays 2025"] },
     {
       title: "Departmental Docs",
@@ -155,7 +158,6 @@ export default function Sidebar() {
     },
   ];
 
-  // Toggle dropdown and close others
   const toggleDropdown = (idx) => {
     setOpenIndex(openIndex === idx ? null : idx);
   };
@@ -207,7 +209,6 @@ export default function Sidebar() {
 
         <div className="space-y-1">
           {dropdowns.map(({ title, items }, idx) => {
-            // Handler when dropdown item is clicked
             const onItemSelect = (item) => {
               if (title === "Forms and Formats") {
                 navigate(
@@ -221,9 +222,19 @@ export default function Sidebar() {
                   "RPL(Plant)": "/telephone-directory/rpl",
                   "HO(RPower)": "/telephone-directory/ho",
                 };
-
                 const path = telMap[item] || "/telephone-directory";
                 navigate(path);
+                closeSidebar();
+              } else if (title === "Departmental Docs") {
+                navigate(
+                  `/departmental-docs?department=${encodeURIComponent(item)}`
+                );
+                closeSidebar();
+              } else if (title === "Policies") {
+                navigate("/policies");
+                closeSidebar();
+              } else if (title === "Gallery") {
+                navigate(`/gallery/${encodeURIComponent(item)}`);
                 closeSidebar();
               } else {
                 alert(`You selected ${item}`);

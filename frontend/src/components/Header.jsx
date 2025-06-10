@@ -87,12 +87,14 @@ export default function Header() {
           onMouseEnter={() => setTelDirOpen(true)}
           onMouseLeave={() => setTelDirOpen(false)}
         >
-          <span
-            className="cursor-pointer hover:underline font-medium"
+          <NavLink
+            to="#"
+            className="clickable hover:underline whitespace-nowrap font-medium"
             style={{ color: brandColor }}
+            onClick={(e) => e.preventDefault()}
           >
             Telephone Directory
-          </span>
+          </NavLink>
 
           {telDirOpen && (
             <div className="absolute top-full mt-1 left-0 bg-white border border-gray-300 rounded shadow-md z-50 min-w-[160px]">
@@ -101,11 +103,10 @@ export default function Header() {
                   key={sub.to}
                   to={sub.to}
                   className={({ isActive }) =>
-                    (isActive ? "bg-blue-100 " : "") +
-                    "block px-4 py-2 text-gray-800 hover:bg-blue-200"
+                    (isActive ? "bg-blue-100 font-semibold" : "") +
+                    " block px-4 py-2 text-sm text-gray-800 hover:bg-blue-200"
                   }
                   onClick={() => setMenuOpen(false)}
-                  style={{ color: brandColor }}
                 >
                   {sub.label}
                 </NavLink>

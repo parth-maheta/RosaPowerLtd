@@ -5,21 +5,23 @@ import Policies from "./pages/Policies";
 import Newsroom from "./pages/Newsroom";
 import TelephoneDirectory from "./pages/TelephoneDirectory";
 import DownloadPageWrapper from "./components/DownloadPageWrapper";
-
+import DepartmentalDocs from "./components/DepartmentalDocs";
+import GalleryPage from "./components/GalleryPage";
 export default function App() {
   return (
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/policies" element={<Policies />} />
-        {/* Add :dept param, making it optional with ? */}
+        <Route path="/newsroom" element={<Newsroom />} />
+        <Route path="/download" element={<DownloadPageWrapper />} />
         <Route
           path="/telephone-directory/:dept?"
           element={<TelephoneDirectory />}
         />
-        <Route path="/newsroom" element={<Newsroom />} />
-        <Route path="/download" element={<DownloadPageWrapper />} />
-        {/* other routes */}
+        <Route path="/departmental-docs" element={<DepartmentalDocs />} />
+
+        <Route path="/gallery/:eventName" element={<GalleryPage />} />
       </Routes>
     </Layout>
   );
