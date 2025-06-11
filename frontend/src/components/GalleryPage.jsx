@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useSwipeable } from "react-swipeable";
 
 const GalleryPage = () => {
   const { eventName } = useParams();
@@ -10,6 +11,7 @@ const GalleryPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const IMAGES_PER_PAGE = 9;
 
@@ -39,11 +41,35 @@ const GalleryPage = () => {
     return () => clearInterval(interval);
   }, [images, isHovered]);
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsFullScreen(false);
+      } else if (e.key === "ArrowRight") {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      } else if (e.key === "ArrowLeft") {
+        setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+      }
+    };
+    if (isFullScreen) {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => window.removeEventListener("keydown", handleKeyDown);
+    }
+  }, [isFullScreen, images.length]);
+
   const paginatedImages = images.slice(
     (currentPage - 1) * IMAGES_PER_PAGE,
     currentPage * IMAGES_PER_PAGE
   );
   const totalPages = Math.ceil(images.length / IMAGES_PER_PAGE);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: () => setCurrentIndex((prev) => (prev + 1) % images.length),
+    onSwipedRight: () =>
+      setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1)),
+    preventDefaultTouchmoveEvent: true,
+    trackMouse: false,
+  });
 
   return (
     <div className="p-4 w-full max-w-7xl mx-auto">
@@ -60,7 +86,7 @@ const GalleryPage = () => {
         <p className="text-center text-gray-500">No images found.</p>
       ) : (
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Left Thumbnails */}
+          {/* Thumbnails */}
           <div className="w-full lg:w-1/2 grid grid-cols-2 sm:grid-cols-3 gap-3">
             {paginatedImages.map((img, i) => {
               const absoluteIndex = (currentPage - 1) * IMAGES_PER_PAGE + i;
@@ -83,7 +109,6 @@ const GalleryPage = () => {
               );
             })}
 
-            {/* Pagination */}
             <div className="col-span-full flex justify-center items-center gap-4 mt-2">
               <button
                 onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
@@ -107,7 +132,7 @@ const GalleryPage = () => {
             </div>
           </div>
 
-          {/* Right Slideshow */}
+          {/* Slideshow */}
           <div className="w-full lg:w-1/2 flex flex-col items-center justify-center">
             <div
               onMouseEnter={() => setIsHovered(true)}
@@ -121,13 +146,54 @@ const GalleryPage = () => {
                 initial={{ opacity: 0.6, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
-                className="w-full h-auto object-contain rounded-xl"
+                onClick={() => setIsFullScreen(true)}
+                className="w-full h-auto object-contain rounded-xl cursor-pointer"
               />
               <div className="absolute bottom-2 right-2 bg-blue-600/70 text-white text-xs px-2 py-1 rounded shadow-md">
                 {currentIndex + 1} / {images.length}
               </div>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Fullscreen with Swipe Support */}
+      {isFullScreen && (
+        <div
+          className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center"
+          onClick={() => setIsFullScreen(false)}
+        >
+          {/* Navigation Buttons */}
+          <button
+            className="absolute left-5 text-white text-3xl p-2 bg-black/40 rounded-full hover:bg-black/70 z-50"
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentIndex((prev) =>
+                prev === 0 ? images.length - 1 : prev - 1
+              );
+            }}
+          >
+            <FaChevronLeft />
+          </button>
+
+          {/* Swipeable Image */}
+          <div {...swipeHandlers} className="max-w-full max-h-full px-3">
+            <img
+              src={images[currentIndex]}
+              alt={`Fullscreen Slide ${currentIndex}`}
+              className="max-w-full max-h-screen object-contain rounded-xl"
+            />
+          </div>
+
+          <button
+            className="absolute right-5 text-white text-3xl p-2 bg-black/40 rounded-full hover:bg-black/70 z-50"
+            onClick={(e) => {
+              e.stopPropagation();
+              setCurrentIndex((prev) => (prev + 1) % images.length);
+            }}
+          >
+            <FaChevronRight />
+          </button>
         </div>
       )}
     </div>

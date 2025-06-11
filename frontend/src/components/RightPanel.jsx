@@ -51,7 +51,6 @@ export default function RightPanel() {
 
       <div className="relative h-[300px] overflow-hidden">
         {" "}
-        {/* Increased height */}
         <div className="animate-vertical-scroll pl-5">
           <ul className="list-disc list-inside text-gray-800 font-medium space-y-2">
             {[...bravoWinners, ...bravoWinners].map((winner, idx) => (
@@ -62,7 +61,6 @@ export default function RightPanel() {
             ))}
           </ul>
         </div>
-        {/* Fade overlays */}
         <div className="pointer-events-none absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent" />
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent" />
       </div>

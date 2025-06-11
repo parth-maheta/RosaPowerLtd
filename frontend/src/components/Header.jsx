@@ -4,9 +4,9 @@ import { FaTwitter, FaLinkedin, FaBars, FaTimes } from "react-icons/fa";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [telDirOpen, setTelDirOpen] = useState(false); // for desktop hover
+  const [telDirOpen, setTelDirOpen] = useState(false);
 
-  const brandColor = "#003366"; // Navy blue
+  const brandColor = "#003366";
 
   const navItems = [
     { to: "/", label: "Home" },
@@ -14,7 +14,6 @@ export default function Header() {
     { to: "/newsroom", label: "Newsroom" },
   ];
 
-  // Telephone Directory submenu links
   const telDirSubmenu = [
     { to: "/telephone-directory/rpl", label: "RPL (Power)" },
     { to: "/telephone-directory/ho", label: "HO (Rpower)" },
@@ -81,7 +80,6 @@ export default function Header() {
           </NavLink>
         ))}
 
-        {/* Telephone Directory with hover dropdown */}
         <div
           className="relative whitespace-nowrap"
           onMouseEnter={() => setTelDirOpen(true)}
@@ -130,7 +128,7 @@ export default function Header() {
 
         {/* Social icons on right */}
         <a
-          href="https://linkedin.com"
+          href="https://www.linkedin.com/company/reliance-power/"
           target="_blank"
           rel="noreferrer"
           aria-label="LinkedIn"
@@ -170,7 +168,6 @@ export default function Header() {
             </NavLink>
           ))}
 
-          {/* Telephone Directory submenu for mobile */}
           <details className="group">
             <summary
               className="cursor-pointer font-medium"
@@ -197,7 +194,6 @@ export default function Header() {
             </div>
           </details>
 
-          {/* Optional search bar on mobile menu */}
           <input
             type="text"
             placeholder="Search"

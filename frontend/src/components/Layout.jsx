@@ -13,14 +13,12 @@ export default function Layout({ children }) {
       <Header />
 
       <div className="flex flex-1 flex-col md:flex-row">
-        {/* Sidebar - hidden on home page */}
         {!isHome && (
           <aside className="md:w-64 w-full md:block">
             <Sidebar />
           </aside>
         )}
 
-        {/* Main content */}
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>
 

@@ -5,14 +5,12 @@ const Footer = () => {
   return (
     <footer className="w-full bg-gray-100 text-gray-800 border-t border-gray-200">
       <div className="w-full max-w-screen-2xl mx-auto px-4 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center sm:text-left">
-        {/* Column 1: Brand Info */}
         <div className="space-y-2 leading-relaxed">
           <h2 className="text-xl font-bold text-[#0072CE]">Reliance Station</h2>
           <p className="text-sm">Powering Progress with Innovation.</p>
           <p className="text-sm">An initiative by Rosa Power Supply Co. Ltd.</p>
         </div>
 
-        {/* Column 2: Quick Links */}
         <div className="space-y-2 leading-relaxed">
           <h3 className="text-md font-semibold text-[#0072CE]">Quick Links</h3>
           <ul className="space-y-1 text-sm">
@@ -39,7 +37,6 @@ const Footer = () => {
           </ul>
         </div>
 
-        {/* Column 3: Contact Info */}
         <div className="space-y-2 leading-relaxed">
           <h3 className="text-md font-semibold text-[#0072CE]">Contact Us</h3>
           <p className="text-sm">Rosa Power Plant, Shahjahanpur</p>
@@ -47,7 +44,6 @@ const Footer = () => {
           <p className="text-sm">Phone: +91 12345 67890</p>
         </div>
 
-        {/* Column 4: Social Media */}
         <div className="space-y-2">
           <h3 className="text-md font-semibold text-[#0072CE]">Follow Us</h3>
           <div className="flex justify-center sm:justify-start space-x-4 text-lg">
@@ -79,7 +75,6 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
       <div className="text-center text-xs py-4 bg-white border-t border-gray-200 text-gray-500">
         &copy; {new Date().getFullYear()} Reliance Station. All rights reserved.
       </div>

@@ -129,24 +129,19 @@ export default function StatsCards() {
   return (
     <section className="bg-gray-50  w-full">
       {" "}
-      {/* reduced padding */}
       <div className="w-full mx-auto">
         <div className="bg-white p-2 rounded-lg shadow-md w-full">
           {" "}
-          {/* reduced padding */}
           <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 text-center mb-3">
             {" "}
-            {/* reduced bottom margin */}
             Power Generation Dashboard
           </h1>
           <div className="flex flex-col sm:flex-row gap-3 justify-between">
             {" "}
-            {/* reduced gap */}
             {/* Table Section */}
             <div className="w-full sm:w-1/3 bg-blue-200 border-2 border-blue-400 rounded-lg flex flex-col max-h-[420px] sm:max-h-[300px] overflow-auto">
               <div className="bg-blue-300 px-2 py-1.5 text-center">
                 {" "}
-                {/* reduced padding */}
                 <h2 className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 leading-tight">
                   Plant Generation Status As on {currentDate.replace(",", "")}{" "}
                   PM
@@ -155,7 +150,6 @@ export default function StatsCards() {
 
               <div className="bg-blue-200 px-2 py-1 text-center border-b border-blue-400">
                 {" "}
-                {/* reduced padding */}
                 <h3 className="text-xs sm:text-sm md:text-base font-semibold text-gray-800 leading-tight">
                   Unit-Wise Generation (MW)
                 </h3>
@@ -163,7 +157,6 @@ export default function StatsCards() {
 
               <div className="bg-blue-100 p-2 flex-1 flex flex-col overflow-auto">
                 {" "}
-                {/* reduced padding */}
                 <div className="grid grid-cols-2 gap-2 mb-2">
                   {units.map((unit) => (
                     <div
@@ -183,7 +176,6 @@ export default function StatsCards() {
                 </div>
                 <div className="bg-blue-200 border border-gray-400 px-2 py-1.5 text-center rounded-md font-semibold text-gray-800 text-sm sm:text-base md:text-lg leading-snug mt-auto">
                   {" "}
-                  {/* reduced padding */}
                   <div className="grid grid-cols-2 gap-2">
                     <span>Total Generation</span>
                     <span>{totalGeneration.toFixed(2)}</span>
@@ -195,14 +187,12 @@ export default function StatsCards() {
             <div className="w-full sm:w-1/3 bg-white rounded-xl shadow border border-gray-200 flex flex-col max-h-[420px] sm:max-h-[300px]">
               <div className="bg-gradient-to-r from-green-600 to-green-700 px-4 py-1.5 rounded-t-xl">
                 {" "}
-                {/* reduced padding */}
                 <h3 className="text-sm sm:text-md md:text-lg font-semibold text-white text-center">
                   Capacity Utilization
                 </h3>
               </div>
               <div className="p-3 flex flex-col items-center flex-1 justify-center">
                 {" "}
-                {/* slightly reduced padding */}
                 <div className="w-full h-28 max-w-[180px]">
                   <Doughnut data={gaugeData} options={gaugeOptions} />
                 </div>
@@ -219,14 +209,12 @@ export default function StatsCards() {
             <div className="w-full sm:w-1/3 bg-white rounded-xl shadow border border-gray-200 flex flex-col max-h-[420px] sm:max-h-[300px]">
               <div className="bg-gradient-to-r from-indigo-600 to-indigo-700 px-4 py-1.5 rounded-t-xl">
                 {" "}
-                {/* reduced padding */}
                 <h3 className="text-sm sm:text-md md:text-lg font-semibold text-white text-center">
                   Generation by Unit
                 </h3>
               </div>
               <div className="p-2 h-40 sm:h-36 md:h-40 flex-1">
                 {" "}
-                {/* reduced padding */}
                 <Bar data={barData} options={barOptions} />
               </div>
             </div>

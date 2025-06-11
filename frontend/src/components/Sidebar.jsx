@@ -167,7 +167,6 @@ export default function Sidebar() {
     setOpenIndex(null);
   };
 
-  // Make sure dropdownRefs has correct number of refs
   while (dropdownRefs.current.length < dropdowns.length) {
     dropdownRefs.current.push(React.createRef());
   }
